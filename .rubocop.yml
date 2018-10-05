@@ -7,7 +7,7 @@ AllCops:
     - tmp/**/*
     - log/**/*
     - Rakefile
-    - gruf-new-relic.gemspec
+    - gruf-newrelic.gemspec
 
 Lint/AmbiguousOperator:
   Enabled: false
