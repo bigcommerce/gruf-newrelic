@@ -20,6 +20,7 @@ module Gruf
     #
     module Configuration
       VALID_CONFIG_KEYS = {
+        server_category: :controller
       }.freeze
 
       attr_accessor *VALID_CONFIG_KEYS.keys
@@ -68,6 +69,7 @@ module Gruf
       ##
       # Automatically determine environment
       #
+      # :nocov:
       def environment
         if defined?(Rails)
           Rails.env
@@ -75,6 +77,7 @@ module Gruf
           ENV['RACK_ENV'] || ENV['RAILS_ENV'] || 'development'
         end
       end
+      # :nocov:
     end
   end
 end

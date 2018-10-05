@@ -24,7 +24,7 @@ module Gruf
 
       def call
         opts = {
-          category: :controller,
+          category: Gruf::Newrelic.server_category,
           class_name: request.service,
           name: request.method_key
         }

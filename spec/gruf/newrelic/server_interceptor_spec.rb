@@ -41,7 +41,11 @@ describe Gruf::Newrelic::ServerInterceptor do
     subject { interceptor.call { true } }
 
     it 'should trace the request' do
-      expect(interceptor).to receive(:perform_action_with_newrelic_trace).once.and_yield
+      expect(interceptor).to receive(:perform_action_with_newrelic_trace).with(
+        category: Gruf::Newrelic.server_category,
+        class_name: request.service,
+        name: request.method_key
+      ).once.and_yield
       subject
     end
   end
