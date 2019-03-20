@@ -35,5 +35,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rspec', '~> 3.7'
   spec.add_development_dependency 'pry'
 
-  spec.add_runtime_dependency 'newrelic_rpm', '~> 5'
+  spec.add_runtime_dependency 'newrelic_rpm', '~> 6'
 end
