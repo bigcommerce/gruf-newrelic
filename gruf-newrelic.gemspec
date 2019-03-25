@@ -30,10 +30,10 @@ Gem::Specification.new do |spec|
   spec.files         = Dir['README.md', 'CHANGELOG.md', 'CODE_OF_CONDUCT.md', 'lib/**/*', 'gruf-new-relic.gemspec']
   spec.require_paths = ['lib']
 
-  spec.add_development_dependency 'bundler', '~> 1.11'
+  spec.add_development_dependency 'bundler', '< 3'
   spec.add_development_dependency 'rake', '~> 10.0'
   spec.add_development_dependency 'rspec', '~> 3.7'
   spec.add_development_dependency 'pry'
 
-  spec.add_runtime_dependency 'newrelic_rpm', '~> 5'
+  spec.add_runtime_dependency 'newrelic_rpm', '~> 6'
 end
