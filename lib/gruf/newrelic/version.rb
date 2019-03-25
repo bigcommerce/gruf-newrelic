@@ -15,6 +15,6 @@
 #
 module Gruf
   module Newrelic
-    VERSION = '1.1.0'.freeze
+    VERSION = '1.1.1.pre'.freeze
   end
 end
