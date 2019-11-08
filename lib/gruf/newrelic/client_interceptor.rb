@@ -22,7 +22,11 @@ module Gruf
     class ClientInterceptor < ::Gruf::Interceptors::ClientInterceptor
       def call(request_context:)
         metadata = request_context.metadata
-        metadata[NEWRELIC_TRACE_HEADER] = ::NewRelic::Agent::DistributedTracing.create_distributed_trace_payload
+        payload = ::NewRelic::Agent::DistributedTracing.create_distributed_trace_payload
+
+        if payload
+          metadata[NEWRELIC_TRACE_HEADER] = payload.http_safe
+        end
 
         yield
       end

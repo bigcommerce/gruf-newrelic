@@ -19,6 +19,7 @@ describe Gruf::Newrelic::ClientInterceptor do
   let(:interceptor) { described_class.new }
   let(:nr_tracer) { ::NewRelic::Agent::DistributedTracing }
   let(:nr_header_data) { 'newrelic-header-data' }
+  let(:nr_trace_instance) { instance_double(::NewRelic::Agent::DistributedTracePayload, http_safe: nr_header_data) }
   let(:request_context) { double(:request_context, metadata: {}) }
   subject { interceptor.call(request_context: request_context){ true } }
 
@@ -29,9 +30,17 @@ describe Gruf::Newrelic::ClientInterceptor do
     end
 
     it 'adds nr tracing header' do
-      expect(nr_tracer).to receive(:create_distributed_trace_payload).once.and_return(nr_header_data)
+      expect(nr_tracer).to receive(:create_distributed_trace_payload).once.and_return(nr_trace_instance)
       subject
       expect(request_context.metadata[Gruf::Newrelic::NEWRELIC_TRACE_HEADER]).to eq(nr_header_data)
+    end
+
+    context "no header" do
+      it 'skips nr tracing header' do
+        expect(nr_tracer).to receive(:create_distributed_trace_payload).once.and_return(nil)
+        subject
+        expect(request_context.metadata[Gruf::Newrelic::NEWRELIC_TRACE_HEADER]).to eq(nil)
+      end
     end
   end
 end
