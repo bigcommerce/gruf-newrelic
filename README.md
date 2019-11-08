@@ -20,6 +20,22 @@ end
 
 This will add New Relic tracing support to all gruf controllers.
 
+### Distributed Tracing
+When controller receives gRPC request, it will automatically apply NewRelic distributed tracing information to current
+request if it is present in `newrelic` header. Make sure request has `newrelic` header with tracing payload (see below)
+and that your account and application settings have distributed tracing enabled
+
+If you are using `::Gruf::Client` to make gRPC request, you need to explicitly add NewRelic Client Interceptor
+in `client_options`:
+```ruby
+client = ::Gruf::Client.new(
+  service: ::Demo::ThingService, 
+  client_options: {
+    interceptors: [::Gruf::Newrelic::ClientInterceptor.new]
+  }
+)
+```
+
 ## License
 
 Copyright (c) 2018-present, BigCommerce Pty. Ltd. All rights reserved 
