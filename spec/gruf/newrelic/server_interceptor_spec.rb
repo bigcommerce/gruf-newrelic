@@ -48,5 +48,18 @@ describe Gruf::Newrelic::ServerInterceptor do
       ).once.and_yield
       subject
     end
+
+    context "distributed tracing" do
+      let(:nr_tracer) { ::NewRelic::Agent::DistributedTracing }
+      let(:nr_header_data) { 'newrelic-header-data' }
+      let(:metadata) { { Gruf::Newrelic::NEWRELIC_TRACE_HEADER => nr_header_data } }
+      let(:grpc_active_call) { double(:grpc_active_call, metadata: metadata, output_metadata: {}) }
+
+      it 'should accept nr tracing payload within newrelic trace' do
+        expect(interceptor).to receive(:perform_action_with_newrelic_trace).once.ordered.and_yield
+        expect(nr_tracer).to receive(:accept_distributed_trace_payload).with(nr_header_data).once.ordered
+        subject
+      end
+    end
   end
 end

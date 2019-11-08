@@ -13,20 +13,25 @@
 # COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 # OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
-require_relative 'newrelic/version'
-require_relative 'newrelic/configuration'
-require_relative 'newrelic/server_interceptor'
-require_relative 'newrelic/client_interceptor'
+require 'spec_helper'
 
-##
-# Gruf main base module
-module Gruf
-  ##
-  # Newrelic gruf module
-  #
-  module Newrelic
-    NEWRELIC_TRACE_HEADER = "newrelic".freeze
+describe Gruf::Newrelic::ClientInterceptor do
+  let(:interceptor) { described_class.new }
+  let(:nr_tracer) { ::NewRelic::Agent::DistributedTracing }
+  let(:nr_header_data) { 'newrelic-header-data' }
+  let(:request_context) { double(:request_context, metadata: {}) }
+  subject { interceptor.call(request_context: request_context){ true } }
 
-    extend Configuration
+  describe '.call' do
+    it 'yields' do
+      expect(interceptor).to receive(:call).once.and_yield
+      subject
+    end
+
+    it 'adds nr tracing header' do
+      expect(nr_tracer).to receive(:create_distributed_trace_payload).once.and_return(nr_header_data)
+      subject
+      expect(request_context.metadata[Gruf::Newrelic::NEWRELIC_TRACE_HEADER]).to eq(nr_header_data)
+    end
   end
 end

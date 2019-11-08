@@ -12,21 +12,20 @@
 # WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
 # COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 # OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-#
-require_relative 'newrelic/version'
-require_relative 'newrelic/configuration'
-require_relative 'newrelic/server_interceptor'
-require_relative 'newrelic/client_interceptor'
+require 'new_relic/agent'
 
-##
-# Gruf main base module
 module Gruf
-  ##
-  # Newrelic gruf module
-  #
   module Newrelic
-    NEWRELIC_TRACE_HEADER = "newrelic".freeze
+    ##
+    # New Relic transaction tracing for Gruf endpoints
+    #
+    class ClientInterceptor < ::Gruf::Interceptors::ClientInterceptor
+      def call(request_context:)
+        metadata = request_context.metadata
+        metadata[NEWRELIC_TRACE_HEADER] = ::NewRelic::Agent::DistributedTracing.create_distributed_trace_payload
 
-    extend Configuration
+        yield
+      end
+    end
   end
 end

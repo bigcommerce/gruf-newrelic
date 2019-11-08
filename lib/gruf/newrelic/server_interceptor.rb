@@ -13,6 +13,7 @@
 # COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 # OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 require 'new_relic/agent'
+require 'new_relic/agent/distributed_tracing'
 
 module Gruf
   module Newrelic
@@ -32,8 +33,16 @@ module Gruf
         # Yield to the given block with NewRelic tracing.
         # http://www.rubydoc.info/github/newrelic/rpm/NewRelic%2FAgent%2FInstrumentation%2FControllerInstrumentation:perform_action_with_newrelic_trace
         perform_action_with_newrelic_trace(opts) do
+          accept_distributed_tracing
           yield
         end
+      end
+
+      private
+
+      def accept_distributed_tracing
+        payload = request.active_call.metadata[NEWRELIC_TRACE_HEADER]
+        ::NewRelic::Agent::DistributedTracing.accept_distributed_trace_payload(payload)
       end
     end
   end
