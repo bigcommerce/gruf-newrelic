@@ -14,17 +14,22 @@
 # WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
 # COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 # OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-#
-source 'https://rubygems.org'
+require 'new_relic/agent'
 
-gem 'gruf', '~> 2.6'
+module Gruf
+  module Newrelic
+    ##
+    # New Relic transaction tracing for Gruf endpoints
+    #
+    class ClientInterceptor < ::Gruf::Interceptors::ClientInterceptor
+      def call(request_context:)
+        metadata = request_context.metadata
+        payload = ::NewRelic::Agent::DistributedTracing.create_distributed_trace_payload
 
-group :development do
-  gem 'bundler-audit'
-  gem 'rspec', '~> 3.8'
-  gem 'rspec_junit_formatter', '~> 0.4.1'
-  gem 'rubocop'
-  gem 'simplecov', require: false
+        metadata[NEWRELIC_TRACE_HEADER] = payload.http_safe if payload
+
+        yield
+      end
+    end
+  end
 end
-
-gemspec

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2018-present, BigCommerce Pty. Ltd. All rights reserved
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
@@ -16,6 +18,7 @@
 require_relative 'newrelic/version'
 require_relative 'newrelic/configuration'
 require_relative 'newrelic/server_interceptor'
+require_relative 'newrelic/client_interceptor'
 
 ##
 # Gruf main base module
@@ -24,6 +27,8 @@ module Gruf
   # Newrelic gruf module
   #
   module Newrelic
+    NEWRELIC_TRACE_HEADER = 'newrelic'
+
     extend Configuration
   end
 end
