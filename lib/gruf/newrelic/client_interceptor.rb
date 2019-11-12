@@ -24,9 +24,7 @@ module Gruf
         metadata = request_context.metadata
         payload = ::NewRelic::Agent::DistributedTracing.create_distributed_trace_payload
 
-        if payload
-          metadata[NEWRELIC_TRACE_HEADER] = payload.http_safe
-        end
+        metadata[NEWRELIC_TRACE_HEADER] = payload.http_safe if payload
 
         yield
       end
