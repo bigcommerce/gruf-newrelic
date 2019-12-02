@@ -1,6 +1,9 @@
 Changelog for the gruf-newrelic gem.
 
 h3. Pending Release
+
+h3. 1.2.0
+
 - Added ClientInterceptor with New Relic Distributed tracing support
 - Refactored ServerInterceptor with New Relic Distributed tracing support
 
