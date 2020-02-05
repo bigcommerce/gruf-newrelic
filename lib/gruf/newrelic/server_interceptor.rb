@@ -44,7 +44,11 @@ module Gruf
 
       def accept_distributed_tracing
         payload = request.active_call.metadata[NEWRELIC_TRACE_HEADER]
-        ::NewRelic::Agent::DistributedTracing.accept_distributed_trace_payload(payload)
+        if payload.instance_of? Array
+          ::NewRelic::Agent::DistributedTracing.accept_distributed_trace_payload(payload[0])
+        else
+          ::NewRelic::Agent::DistributedTracing.accept_distributed_trace_payload(payload)
+        end
       end
     end
   end
