@@ -17,6 +17,6 @@
 #
 module Gruf
   module Newrelic
-    VERSION = '1.2.1'
+    VERSION = '1.2.2.pre'
   end
 end
