@@ -22,7 +22,8 @@ module Gruf
     #
     module Configuration
       VALID_CONFIG_KEYS = {
-        server_category: :controller
+        server_category: :controller,
+        transaction_name_prefixes: []
       }.freeze
 
       attr_accessor *VALID_CONFIG_KEYS.keys

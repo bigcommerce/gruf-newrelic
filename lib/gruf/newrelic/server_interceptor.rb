@@ -26,9 +26,10 @@ module Gruf
       include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
 
       def call
+        class_name_components = Gruf::Newrelic.transaction_name_prefixes + [request.service]
         opts = {
           category: Gruf::Newrelic.server_category,
-          class_name: request.service,
+          class_name: class_name_components.join('/'),
           name: request.method_key
         }
 

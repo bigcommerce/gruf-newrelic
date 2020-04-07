@@ -43,8 +43,18 @@ describe Gruf::Newrelic::ServerInterceptor do
     it 'should trace the request' do
       expect(interceptor).to receive(:perform_action_with_newrelic_trace).with(
         category: Gruf::Newrelic.server_category,
-        class_name: request.service,
+        class_name: request.service.name,
         name: request.method_key
+      ).once.and_yield
+      subject
+    end
+
+    it 'should set metric grouping' do
+      allow(Gruf::Newrelic).to receive(:transaction_name_prefixes).and_return(["Controller", "gRPC"])
+      expect(interceptor).to receive(:perform_action_with_newrelic_trace).with(
+        category: Gruf::Newrelic.server_category,
+        class_name: 'Controller/gRPC/ThingService',
+        name: 'get_thing'
       ).once.and_yield
       subject
     end
