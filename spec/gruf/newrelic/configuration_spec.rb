@@ -29,6 +29,7 @@ describe Gruf::Newrelic::Configuration do
     it 'should reset config vars to default' do
       obj.configure do |c|
         c.server_category = :request
+        c.transaction_name_prefixes = %w[Controller gRPC]
       end
       obj.reset
       expect(subject).to_not eq :request
