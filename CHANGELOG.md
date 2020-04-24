@@ -2,6 +2,10 @@ Changelog for the gruf-newrelic gem.
 
 ### Pending Release
 
+### 1.3.0
+
+- Allow customization of transaction name prefix [#7]
+
 ### 1.2.1
 
 - Fix issue with NewRelic trace headers when they are arrays 
