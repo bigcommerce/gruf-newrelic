@@ -1,6 +1,6 @@
 # gruf-newrelic - New Relic support for gruf
 
-[![CircleCI](https://circleci.com/gh/bigcommerce/gruf-newrelic/tree/master.svg?style=svg)](https://circleci.com/gh/bigcommerce/gruf-newrelic/tree/master) [![Gem Version](https://badge.fury.io/rb/gruf-newrelic.svg)](https://badge.fury.io/rb/gruf-newrelic) [![Inline docs](http://inch-ci.org/github/bigcommerce/gruf-newrelic.svg?branch=master)](http://inch-ci.org/github/bigcommerce/gruf-newrelic)
+[![CircleCI](https://circleci.com/gh/bigcommerce/gruf-newrelic/tree/main.svg?style=svg)](https://circleci.com/gh/bigcommerce/gruf-newrelic/tree/main) [![Gem Version](https://badge.fury.io/rb/gruf-newrelic.svg)](https://badge.fury.io/rb/gruf-newrelic) [![Inline docs](http://inch-ci.org/github/bigcommerce/gruf-newrelic.svg?branch=main)](http://inch-ci.org/github/bigcommerce/gruf-newrelic)
 
 Adds New Relic support for [gruf](https://github.com/bigcommerce/gruf) 2.0.0+.
 
