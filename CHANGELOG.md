@@ -2,6 +2,9 @@ Changelog for the gruf-newrelic gem.
 
 ### Pending Release
 
+- Ruby 3 support, remove support for Ruby < 2.6
+- Loosen gem dependencies, add bundler 2 support
+
 ### 1.3.0
 
 - Allow customization of transaction name prefix [#7]
