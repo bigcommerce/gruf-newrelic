@@ -2,6 +2,8 @@ Changelog for the gruf-newrelic gem.
 
 ### Pending Release
 
+### 1.4.0
+
 - Ruby 3 support, remove support for Ruby < 2.6
 - Loosen gem dependencies, add bundler 2 support
 
