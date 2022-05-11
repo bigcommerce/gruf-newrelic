@@ -46,7 +46,7 @@ module Gruf
       def accept_distributed_tracing
         payload = request.active_call.metadata[NEWRELIC_TRACE_HEADER]
         payload = payload.first if payload.is_a?(Enumerable)
-        ::NewRelic::Agent::DistributedTracing.accept_distributed_trace_payload(payload)
+        ::NewRelic::Agent::DistributedTracing.accept_distributed_trace_headers(payload)
       end
     end
   end
